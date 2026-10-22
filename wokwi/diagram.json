@@ -1,0 +1,384 @@
+{
+  "version": 1,
+  "author": "Proyecto academico IoT",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 20,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht",
+      "top": -86.1,
+      "left": -187.8,
+      "attrs": {
+        "temperature": "24",
+        "humidity": "65"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "pullup",
+      "top": -70,
+      "left": -95,
+      "rotate": 90,
+      "attrs": {
+        "value": "10000"
+      }
+    },
+    {
+      "type": "wokwi-lcd2004",
+      "id": "lcd",
+      "top": -170,
+      "left": 130,
+      "attrs": {
+        "pins": "i2c",
+        "background": "blue",
+        "color": "white"
+      }
+    },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay",
+      "top": 50,
+      "left": 230,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "fan",
+      "top": 75,
+      "left": 425,
+      "attrs": {
+        "color": "green",
+        "label": "VENTILACION (indicador)"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "rfan",
+      "top": 165,
+      "left": 420,
+      "rotate": 90,
+      "attrs": {
+        "value": "330"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "alarm",
+      "top": 225,
+      "left": 430,
+      "attrs": {
+        "color": "red",
+        "label": "ALERTA HUMEDAD / SENSOR"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "ralarm",
+      "top": 290,
+      "left": 335,
+      "attrs": {
+        "value": "330"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "auto",
+      "top": 350,
+      "left": -180,
+      "attrs": {
+        "color": "blue",
+        "label": "AUTO [A]",
+        "key": "A"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "on",
+      "top": 350,
+      "left": -45,
+      "attrs": {
+        "color": "green",
+        "label": "ENCENDER [E]",
+        "key": "E"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "off",
+      "top": 350,
+      "left": 90,
+      "attrs": {
+        "color": "red",
+        "label": "APAGAR [P]",
+        "key": "P"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "title",
+      "top": -240,
+      "left": -190,
+      "attrs": {
+        "text": "INVERNADERO | ESP32 + DHT22\nMonitoreo y control remoto - etapa 2"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "rules",
+      "top": 215,
+      "left": -225,
+      "attrs": {
+        "text": "AUTO: >30 C enciende\n<27 C apaga\n27-30 C conserva estado"
+      }
+    },
+    {
+      "type": "wokwi-text",
+      "id": "scope",
+      "top": 450,
+      "left": -185,
+      "attrs": {
+        "text": "LED verde = ventilacion simulada; no motor.\nDashboard conectado | historial y control MQTT"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+    [
+      "esp:3V3",
+      "dht:VCC",
+      "red",
+      [
+        "h-80",
+        "v-85"
+      ]
+    ],
+    [
+      "esp:GND.1",
+      "dht:GND",
+      "black",
+      [
+        "h-120",
+        "v-75"
+      ]
+    ],
+    [
+      "esp:15",
+      "dht:SDA",
+      "green",
+      [
+        "h40",
+        "v-120",
+        "h-300"
+      ]
+    ],
+    [
+      "dht:VCC",
+      "pullup:1",
+      "red",
+      []
+    ],
+    [
+      "pullup:2",
+      "dht:SDA",
+      "green",
+      []
+    ],
+    [
+      "esp:5V",
+      "lcd:VCC",
+      "red",
+      [
+        "h-35",
+        "v-390",
+        "h190"
+      ]
+    ],
+    [
+      "esp:GND.2",
+      "lcd:GND",
+      "black",
+      [
+        "h50",
+        "v-240"
+      ]
+    ],
+    [
+      "esp:21",
+      "lcd:SDA",
+      "blue",
+      [
+        "h70",
+        "v-180"
+      ]
+    ],
+    [
+      "esp:22",
+      "lcd:SCL",
+      "yellow",
+      [
+        "h90",
+        "v-160"
+      ]
+    ],
+    [
+      "esp:5V",
+      "relay:VCC",
+      "red",
+      [
+        "h-50",
+        "v100",
+        "h250"
+      ]
+    ],
+    [
+      "esp:GND.2",
+      "relay:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:26",
+      "relay:IN",
+      "orange",
+      [
+        "h-35",
+        "v-45",
+        "h170"
+      ]
+    ],
+    [
+      "esp:3V3",
+      "relay:COM",
+      "red",
+      [
+        "h-65",
+        "v-50",
+        "h480"
+      ]
+    ],
+    [
+      "relay:NO",
+      "rfan:1",
+      "green",
+      []
+    ],
+    [
+      "rfan:2",
+      "fan:A",
+      "green",
+      []
+    ],
+    [
+      "fan:C",
+      "esp:GND.2",
+      "black",
+      [
+        "h45",
+        "v205",
+        "h-330"
+      ]
+    ],
+    [
+      "esp:27",
+      "ralarm:1",
+      "purple",
+      [
+        "h-40",
+        "v150",
+        "h200"
+      ]
+    ],
+    [
+      "ralarm:2",
+      "alarm:A",
+      "purple",
+      []
+    ],
+    [
+      "alarm:C",
+      "esp:GND.2",
+      "black",
+      [
+        "h35",
+        "v70",
+        "h-320"
+      ]
+    ],
+    [
+      "esp:18",
+      "auto:1.l",
+      "blue",
+      [
+        "h70",
+        "v210",
+        "h-350"
+      ]
+    ],
+    [
+      "auto:2.l",
+      "esp:GND.1",
+      "black",
+      [
+        "h-35",
+        "v-220"
+      ]
+    ],
+    [
+      "esp:19",
+      "on:1.l",
+      "green",
+      [
+        "h90",
+        "v230",
+        "h-225"
+      ]
+    ],
+    [
+      "on:2.l",
+      "esp:GND.1",
+      "black",
+      [
+        "h-25",
+        "v-235"
+      ]
+    ],
+    [
+      "esp:23",
+      "off:1.l",
+      "orange",
+      [
+        "h110",
+        "v255",
+        "h-100"
+      ]
+    ],
+    [
+      "off:2.l",
+      "esp:GND.1",
+      "black",
+      [
+        "h-15",
+        "v-250"
+      ]
+    ]
+  ],
+  "dependencies": {}
+}
